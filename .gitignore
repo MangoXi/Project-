@@ -10,7 +10,7 @@ typedef enum _Sex
 	FEMALE
 }Sex;
 
-typedef struct _Node/*定义了一个数据结构：名字 编号*/
+typedef struct _Node
 {
 	char name[256];
 	int  salary;
@@ -78,7 +78,6 @@ int main()
 
 void processList(NodePtr list)
 {
-	//遍历单链表，输出数据
 	Node* pNode = list;
 	int row = 1;
 	while (pNode != 0)
@@ -97,10 +96,10 @@ bool isEmpty(NodePtr list)
 
 int insertData(NodePtr *ppNode, const char* data)
 {
-	char* a = NULL; //声明一个指向a的char类型的指针
-	a = (char*)malloc(100 * sizeof(char));//使用malloc分配内存的首地址，然后赋值给a
+	char* a = NULL; 
+	a = (char*)malloc(100 * sizeof(char));
 	NodePtr pCurNode = *ppNode;
-	if (pCurNode == 0) //表为空的情况（插入节点位置为空）
+	if (pCurNode == 0) 
 	{
 		*ppNode = (NodePtr)malloc(sizeof(Node));
 		memset(*ppNode, 0, sizeof(Node));
@@ -109,17 +108,14 @@ int insertData(NodePtr *ppNode, const char* data)
 	else
 	{
 		Node* pNewNode = (Node*)malloc(sizeof(Node));
-		memset(pNewNode, 0, sizeof(Node));//1. 生成新Node
-		pNewNode->next = pCurNode->next;//2. 插入节点的next赋值给新Node
+		memset(pNewNode, 0, sizeof(Node));
+		pNewNode->next = pCurNode->next;
 		pCurNode->next = pNewNode;//3. 
-		pCurNode = pNewNode;//更新当前结点
+		pCurNode = pNewNode;
 	}
-	//复制数据（给节点数据赋值）
-	//sprintf(a, "%s", data);//data写入a所指向的地址
-	//printf("%s\n",a);
 	free(a);
-	strcpy(pCurNode->name, data);//data写入pCurNode->name
-	sprintf(a, "%s", pCurNode->name);//pCurNode->name写入a
+	strcpy(pCurNode->name, data);
+	sprintf(a, "%s", pCurNode->name);
 	return 0;
 }
 
@@ -170,9 +166,9 @@ int deleteData(NodePtr *ppNode, const char* data)
 	NodePtr preNode = 0;
 	while (pNode != 0)
 	{
-		if (strcmp(pNode->name, data) == 0)//1.把要删除节点的next赋值给其前一个节点的next
+		if (strcmp(pNode->name, data) == 0)
 		{
-			if (preNode == 0)//如果是头结点，就更新列表头指针
+			if (preNode == 0)
 			{
 				*ppNode = (*ppNode)->next;
 			}
@@ -180,7 +176,7 @@ int deleteData(NodePtr *ppNode, const char* data)
 			{
 				preNode->next = pNode->next;
 			}
-			free(pNode);//2. 释放要删除节点占用的内存
+			free(pNode);
 			break;
 		}
 		preNode = pNode;
